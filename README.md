@@ -35,6 +35,7 @@ run `php artisan serve` to start the web server
 The command db:seed will create a user and 2 players
 
 username: root@united.remote
+
 password: root
 
 
@@ -49,7 +50,7 @@ After some research I decided to use the "Cactus kev" solution with a lookup tab
 I found a PHP implentation of the algo at https://github.com/czarpino/pokerank, I added just minor changes to that implementation.
 
 
-tie is not marked as a Win
+TIE is not marked as a WIN
 
 
 please feel free to contact me for any issue running this project
