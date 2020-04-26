@@ -8,6 +8,8 @@ I decided to use MySQL as I have a server already running, with a large set of d
 
 move in the project directory and:
 
+run `composer install`
+
 run `cp .env.example .env`
 
 in the .env setup the lines
@@ -22,8 +24,6 @@ DB_PASSWORD=laravel
 ```
 
 run `php artisan key:generate`
-
-run `composer install`
 
 run `php artisan migrate`
 
