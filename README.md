@@ -34,10 +34,10 @@ run `php artisan serve` to start the web server
 
 The command db:seed will create a user and 2 players
 
+```
 username: root@united.remote
-
 password: root
-
+```
 
 to import the hands.txt file after the login please select import from the menu (/import) or use the artisan command
 
