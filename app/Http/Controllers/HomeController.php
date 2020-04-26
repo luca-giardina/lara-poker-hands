@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Order;
-use App\Client;
-use App\Deal;
+use App\Player;
+use App\Game;
 
 class HomeController extends Controller
 {
@@ -27,36 +26,27 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $query = new Order;
+        $query = new Game;
 
         // filters        
-        if($request->has('client') && $request->client)
+        if($request->has('player') && $request->player)
         {
-            $query = $query->where('client_id', $request->client);
+            $name = Player::find($request->player)->name;
+            $query = $query->where('winner_id', $request->player);
         }
-        if($request->has('deal') && $request->deal)
-        {
-            $query = $query->where('deal_id', $request->deal);
+        else {
+            $name = 'All';
         }
 
-        $query = $query->get();
-
-        $clients = Client::all();
-        $deals = Deal::all();
-
-        // no filters
-        $result = [
-            [
-                'accepted' => $query->sum("accepted"),
-                'refused' => $query->sum("refused")
-            ]
-        ];
+        $wins = $query->count();
 
 
         return view('home', [
-            'clients' => $clients,
-            'deals' => $deals,
-            'items' => $result
+            'items' => [
+                'name' => $name,
+                'wins' => $wins
+            ],
+            'players' => Player::all()
         ]);
     }
 
@@ -68,5 +58,17 @@ class HomeController extends Controller
     public function import()
     {
         return view('import');
+    }
+
+    /**
+     * Upload the file.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function importFile(Request $request)
+    {
+        $path = $request->file('hands')->store(time());
+        dd($path);
+        return view('import', ['result' => $result]);
     }
 }

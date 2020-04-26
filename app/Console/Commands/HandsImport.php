@@ -103,7 +103,5 @@ class HandsImport extends Command
             }
             fclose($handle);
         }
-
-        $this->info("done.");
     }
 }

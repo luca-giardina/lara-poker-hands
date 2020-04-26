@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/import', 'HomeController@import')->name('import');
+Route::post('/import', 'HomeController@importFile')->name('importFile');

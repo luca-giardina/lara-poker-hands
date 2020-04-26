@@ -1924,7 +1924,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      uploadReady: false
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -1994,18 +2007,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["items", "clients", "deals", "selectedclient", "selecteddeal"],
+  props: ["items", "players"],
   mounted: function mounted() {
     console.log('Table mounted.');
   }
@@ -37657,28 +37660,48 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [_vm._v("CSV Import")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("input", { attrs: { type: "file" } })
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("Hands Import")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("form", { attrs: { name: "form", method: "POST" } }, [
+              _c("input", {
+                attrs: { type: "file", name: "hands" },
+                on: {
+                  change: function($event) {
+                    _vm.uploadReady = true
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group text-right" }, [
+                _vm.uploadReady
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary mb-2",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Upload")]
+                    )
+                  : _vm._e()
+              ])
             ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37704,64 +37727,25 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Table")]),
+          _c("div", { staticClass: "card-header" }, [_vm._v("Statistics")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("form", { attrs: { name: "form" } }, [
               _c("div", { staticClass: "form-group" }, [
                 _c(
                   "select",
-                  { staticClass: "form-control", attrs: { name: "client" } },
+                  { staticClass: "form-control", attrs: { name: "player" } },
                   [
                     _c("option"),
                     _vm._v(" "),
-                    _vm._l(_vm.clients, function(client) {
-                      return _c(
-                        "option",
-                        {
-                          domProps: {
-                            selected: client.client_id == _vm.selectedclient,
-                            value: client.client_id
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(client.name) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "select",
-                  { staticClass: "form-control", attrs: { name: "deal" } },
-                  [
-                    _c("option"),
-                    _vm._v(" "),
-                    _vm._l(_vm.deals, function(deal) {
-                      return _c(
-                        "option",
-                        {
-                          domProps: {
-                            selected: deal.deal_id == _vm.selecteddeal,
-                            value: deal.deal_id
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(deal.name) +
-                              "\n                                "
-                          )
-                        ]
-                      )
+                    _vm._l(_vm.players, function(player) {
+                      return _c("option", { domProps: { value: player.id } }, [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(player.name) +
+                            "\n                                "
+                        )
+                      ])
                     })
                   ],
                   2
@@ -37771,7 +37755,7 @@ var render = function() {
               _vm._m(0)
             ]),
             _vm._v(" "),
-            _vm.items.length
+            _vm.items
               ? _c(
                   "table",
                   {
@@ -37785,17 +37769,13 @@ var render = function() {
                   [
                     _vm._m(1),
                     _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.items, function(item) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(item.accepted))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.refused))])
-                        ])
-                      }),
-                      0
-                    )
+                    _c("tbody", [
+                      _c("tr", [
+                        _c("td", [_vm._v(_vm._s(_vm.items.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.items.wins))])
+                      ])
+                    ])
                   ]
                 )
               : _c(
@@ -37835,9 +37815,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Accepted")]),
+        _c("th", [_vm._v("Player Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Refused")])
+        _c("th", [_vm._v("Wins")])
       ])
     ])
   }
@@ -50245,8 +50225,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/brokenbox/Project/actual-sales/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/brokenbox/Project/actual-sales/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/brokenbox/Project/united-remote/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/brokenbox/Project/united-remote/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
