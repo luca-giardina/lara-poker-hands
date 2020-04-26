@@ -45,7 +45,7 @@ to import the hands.txt file after the login please select import from the menu 
 
 the results will be available in the dashboard (/home)
 
-After some research I decided to use the "Cactus kev" solution with a lookup file for the 7ksh combination. 
+After some research I decided to use the "Cactus kev" solution with a lookup file for the 7ksh combinations. 
 
 I found a PHP implentation of the algo at https://github.com/czarpino/pokerank, I added just minor changes to that implementation.
 
