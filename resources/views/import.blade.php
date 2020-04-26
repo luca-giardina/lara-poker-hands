@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-@if(session()->get('message'))
+@if($error ?? false)
+    <div class="alert alert-warning">
+       Error
+    </div>
+@elseif($success ?? false)
     <div class="alert alert-success">
-       {{ session()->get('message') }}
+       File uploaded
     </div>
 @endif
+
 <import-component>
 </import-component />
 

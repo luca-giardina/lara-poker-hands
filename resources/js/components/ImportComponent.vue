@@ -7,7 +7,7 @@
                     <div class="card-header">Hands Import</div>
 
                     <div class="card-body">
-                        <form name="form" method="POST">
+                        <form name="form" method="post" enctype="multipart/form-data">
                             <input type="file" name="hands" @change="uploadReady = true">
                             <input type="hidden" name="_token" :value="csrf">
                             <div class="form-group text-right">

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Player;
 use App\Game;
 
+use Artisan;
+
 class HomeController extends Controller
 {
     /**
@@ -67,8 +69,15 @@ class HomeController extends Controller
      */
     public function importFile(Request $request)
     {
-        $path = $request->file('hands')->store(time());
-        dd($path);
-        return view('import', ['result' => $result]);
+        $file = $request->file('hands');
+        $path = $file->getPathName();
+        try {
+            Artisan::call("import:hands $path");
+        }
+        catch(\Exception $e) {
+            return view('import', ['error' => true]);
+        }
+
+        return view('import', ['success' => true]);
     }
 }

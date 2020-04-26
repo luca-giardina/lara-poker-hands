@@ -94,7 +94,7 @@ class Poker extends Model
             return $this->score($pprod);
         }
         catch(\Exception $e) {
-            dd("PROBLEM", $cards, $hand, $pprod, 0xF00 & $hand[0] & $hand[1] & $hand[2] & $hand[3] & $hand[4]);
+            dd("TODO", $cards, $hand, $pprod, 0xF00 & $hand[0] & $hand[1] & $hand[2] & $hand[3] & $hand[4]);
         }
     }
     
@@ -106,7 +106,7 @@ class Poker extends Model
      * 
      * @return int
      */
-    public function toInt($suit, $rank)
+    public function getInteger($suit, $rank)
     {
         return $suit << 8 | $this->primeRankValues[intval($rank)];
     }
@@ -125,7 +125,7 @@ class Poker extends Model
 
         foreach ($hand as $card)
         {
-            $convertedHand[] = $this->toInt(self::SUITS[$card[1]], self::RANKS[$card[0]]);            
+            $convertedHand[] = $this->getInteger(self::SUITS[$card[1]], self::RANKS[$card[0]]);            
         }
 
         return $convertedHand;
